@@ -11,24 +11,17 @@ public class CameraPosition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        BOBounds = frameObject.GetComponent<RectTransform>();
-        DisplayWorldCorners();
+        //https://answers.unity.com/questions/1190535/auto-scale-camera-to-fit-game-object-to-screen-cen.html
+        Vector3 xyz = frameObject.GetComponent<MeshFilter>().mesh.bounds.size;
+        float distance = Mathf.Max(xyz.x, xyz.y, xyz.z);
+        distance /= (2.0f * Mathf.Tan(0.5f * Camera.fieldOfView * Mathf.Deg2Rad));
+        // Move camera in -z-direction; change '2.0f' to your needs
+        yourCamera.transform.position = new Vector3(yourCamera.transform.position.x, yourCamera.transform.position.y, -distance * 2.0f);
     }
 
     // Update is called once per frame
     void Update()
     {
         
-    }
-    void DisplayWorldCorners()
-    {
-        Vector3[] v = new Vector3[4];
-        BOBounds.GetWorldCorners(v);
-
-        Debug.Log("World Corners");
-        for (var i = 0; i < 4; i++)
-        {
-            Debug.Log("World Corner " + i + " : " + v[i]);
-        }
     }
 }
