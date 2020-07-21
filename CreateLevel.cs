@@ -9,9 +9,12 @@ public class CreateLevel : MonoBehaviour
     //The tiles have been modeled as 4x4 unity unit squares
     private const float tileSize = 4;    
 
-    private GameObject root, floor, environment, ball;
+    private GameObject root, floor, environment, ball, edge;
     public int xHalfExt;
     public int zHalfExt;
+
+    public GameObject topEdge, rightEdge, bottomEdge, leftEdge, basementOverlay;
+
 
     public GameObject outerWall;
     public GameObject innerWall;    
@@ -25,6 +28,10 @@ public class CreateLevel : MonoBehaviour
         // Gather together all refrences you will need later on
 
         root = GameObject.Find("MovablePlayfield");
+        floor = GameObject.Find("DSBasementFloor");
+
+
+        scaleFloorAndCreateEdges();
 
         // Build an offset for the dyn playfield from the BasePlatform e.g. the bigger halfExtent value in unity units
 
@@ -72,6 +79,30 @@ public class CreateLevel : MonoBehaviour
         // Player has fallen onto ground plane, reset
     }
 
+    public void scaleFloorAndCreateEdges()
+    {
+        float xEdgeOffset = (tileSize * (xHalfExt + 1)+tileSize) * 1.1f;
+        float xEdgeLength = (2*tileSize * (2 * xHalfExt + 1)+tileSize) * 1.1f;
+        float zEdgeOffset = (2*tileSize * (zHalfExt + 1) + tileSize) * 1.1f;
+        float zEdgeLength = (2*tileSize * (2 * zHalfExt + 1) + tileSize) * 1.1f;
+
+        floor.transform.localScale = new Vector3(tileSize * (2* xHalfExt + 1), 1, tileSize * (2 * zHalfExt + 1));
+
+        topEdge.transform.localPosition = new Vector3(0, -5, -xEdgeOffset);
+        topEdge.transform.localScale = new Vector3(0.2f , tileSize, xEdgeLength);
+
+        bottomEdge.transform.localPosition = new Vector3(0, -5, xEdgeOffset);
+        bottomEdge.transform.localScale = new Vector3(0.2f, tileSize, xEdgeLength);
+
+        leftEdge.transform.localPosition = new Vector3(-zEdgeOffset, -5, 0);
+        leftEdge.transform.localScale = new Vector3(0.2f, tileSize, zEdgeLength);
+
+        rightEdge.transform.localPosition = new Vector3(zEdgeOffset, -5, 0);
+        rightEdge.transform.localScale = new Vector3(0.2f, tileSize, zEdgeLength);
+
+        basementOverlay.transform.localScale = new Vector3(1,1,1);
+    }
+
     public void createFloor()
     {
         for (int i = -xHalfExt; i <= xHalfExt; i++)
@@ -89,14 +120,14 @@ public class CreateLevel : MonoBehaviour
 
     public void createOuterWalls()
     {
+
         for (int i = -xHalfExt; i <= xHalfExt; i++)
         {
-            Instantiate(outerWall, new Vector3(i * tileSize, 0, zHalfExt * tileSize) + new Vector3(0, 1f, tileSize / 2),
+            Instantiate(outerWall, new Vector3(i * tileSize, 0, zHalfExt * tileSize) + new Vector3(0, 1, tileSize / 2),
                         Quaternion.Euler(0, 0, 0),
                         root.transform);
         }
-
-        for (int i = -xHalfExt; i <= xHalfExt; i++)
+        for (int i = -zHalfExt; i <= zHalfExt; i++)
         {
             Instantiate(outerWall, new Vector3(xHalfExt * tileSize, 0, i * tileSize) + new Vector3(tileSize / 2, 1, 0),
                         Quaternion.Euler(0, 90, 0),
@@ -104,12 +135,11 @@ public class CreateLevel : MonoBehaviour
         }
         for (int i = -xHalfExt; i <= xHalfExt; i++)
         {
-            Instantiate(outerWall, new Vector3(i * tileSize, 0, -zHalfExt * tileSize) + new Vector3(0, 1f, -tileSize / 2),
+            Instantiate(outerWall, new Vector3(i * tileSize, 0, -zHalfExt * tileSize) + new Vector3(0, 1, -tileSize / 2),
                         Quaternion.Euler(0, 0, 0),
                         root.transform);
         }
-
-        for (int i = -xHalfExt; i <= xHalfExt; i++)
+        for (int i = -zHalfExt; i <= zHalfExt; i++)
         {
             Instantiate(outerWall, new Vector3(-xHalfExt * tileSize, 0, i * tileSize) + new Vector3(-tileSize / 2, 1, 0),
                         Quaternion.Euler(0, 90, 0),
