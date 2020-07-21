@@ -4,20 +4,31 @@ using UnityEngine;
 
 public class CameraPosition : MonoBehaviour
 {
-    public GameObject manager;
+    public GameObject manager, frameObject;
     public int rel;
+    RectTransform BOBounds;
 
     // Start is called before the first frame update
     void Start()
     {
-        //int xHalfExt = manager.GetComponent<>.;
-        //rel = manager.xHalfExt * 4;
-        transform.Translate(new Vector3(1, 1, -(1*rel)));
+        BOBounds = frameObject.GetComponent<RectTransform>();
+        DisplayWorldCorners();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+    void DisplayWorldCorners()
+    {
+        Vector3[] v = new Vector3[4];
+        BOBounds.GetWorldCorners(v);
+
+        Debug.Log("World Corners");
+        for (var i = 0; i < 4; i++)
+        {
+            Debug.Log("World Corner " + i + " : " + v[i]);
+        }
     }
 }

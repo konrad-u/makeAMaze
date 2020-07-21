@@ -15,12 +15,12 @@ public class CreateLevel : MonoBehaviour
 
     public GameObject topEdge, rightEdge, bottomEdge, leftEdge, basementOverlay, basementFloor, horzPedal, vertPedal, ball;
 
-
     public GameObject outerWall;
     public GameObject innerWall;    
     public GameObject exitTile;
     public GameObject[] floorTiles;  
-    private int start, end;
+    //private int start, end;
+    private Vector3 startPos;
 
     // Use this for initialization
     void Awake()
@@ -38,9 +38,6 @@ public class CreateLevel : MonoBehaviour
         createFloor();
 
         setPedals();
-        // Calculate a scale factor for scaling the non-movable environment (and therefore the camera) and the BasePlatform 
-        // the factors that the environment are scaled for right now are for x/zHalfExt =1, scale accordingly
-        // i.e. the playfield/environment should be as big as the dynamic field
 
         // Scale Environment
 
@@ -56,6 +53,7 @@ public class CreateLevel : MonoBehaviour
 
             // Place the PlayerBall above the playfield
             placeBallStart();
+            setBallAtStart();
         }
     }
 
@@ -63,16 +61,18 @@ public class CreateLevel : MonoBehaviour
     void placeBallStart()
     {
         float randomX = UnityEngine.Random.Range(-xHalfExt * tileSize, xHalfExt * tileSize);
-        Debug.Log(randomX);
         float randomZ = UnityEngine.Random.Range(-zHalfExt * tileSize, zHalfExt * tileSize);
-        Debug.Log(randomZ); 
-        ball.transform.position = new Vector3(randomX, 5, randomZ);
-        // Reset Physics
-        // Place the ball
+        startPos = new Vector3(randomX, 5, randomZ);
+    }
+
+    public void setBallAtStart()
+    {
+        ball.transform.position = startPos;
     }
 
     public void EndzoneTrigger(GameObject other)
     {    
+
         // Check if ball first...
         // Player has fallen onto ground plane, reset
     }
@@ -105,8 +105,6 @@ public class CreateLevel : MonoBehaviour
 
         rightEdge.transform.localPosition = new Vector3(xEdgeOffset, -5, 0);
         rightEdge.transform.localScale = new Vector3(0.2f, tileSize, zEdgeLength);
-        Debug.Log("the x edge length is " + xEdgeLength);
-        Debug.Log("the z edge length is " + zEdgeLength);
 
         basementOverlay.transform.localScale = new Vector3(xEdgeLength/10, 0, zEdgeLength/10) ;
         basementFloor.transform.localScale = new Vector3(xEdgeLength/2.2f, 1, zEdgeLength/2.2f);
@@ -115,15 +113,27 @@ public class CreateLevel : MonoBehaviour
 
     public void createFloor()
     {
+        int randomI = UnityEngine.Random.Range(-xHalfExt, xHalfExt);
+        int randomJ = UnityEngine.Random.Range(-zHalfExt, zHalfExt);
+
         for (int i = -xHalfExt; i <= xHalfExt; i++)
         {
             for (int j = -zHalfExt; j <= zHalfExt; j++)
             {
-                int rTile = UnityEngine.Random.Range(0, 6);
-                Instantiate(floorTiles[rTile],
-                    new Vector3(i, 0, j) * tileSize + new Vector3(0, 0.5f, 0),
+                if (i.Equals(randomI) && j.Equals(randomJ))
+                {
+                    Instantiate(exitTile, new Vector3(i, 0, j) * tileSize + new Vector3(0, 0.5f, 0),
                     Quaternion.Euler(0, 0, 0),
                     root.transform);
+                }
+                else
+                {
+                    int rTile = UnityEngine.Random.Range(0, 6);
+                    Instantiate(floorTiles[rTile],
+                        new Vector3(i, 0, j) * tileSize + new Vector3(0, 0.5f, 0),
+                        Quaternion.Euler(0, 0, 0),
+                        root.transform);
+                }
             }
         }
     }

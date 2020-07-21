@@ -37,7 +37,7 @@ public class BaseMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            //Debug.Log("Up Arrow key was pressed.");
+            //Debug.Log("Up Arrow key was pressed.");S
             transform.Rotate(new UnityEngine.Vector3(1, 0, 0), -vertRot);
             vertPedal.transform.Rotate(new UnityEngine.Vector3(0, -2, 0), -vertRot);
         }
