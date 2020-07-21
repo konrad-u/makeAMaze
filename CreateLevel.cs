@@ -81,23 +81,23 @@ public class CreateLevel : MonoBehaviour
 
     public void scaleFloorAndCreateEdges()
     {
-        float xEdgeOffset = (tileSize * (xHalfExt + 1)+tileSize) * 1.1f;
-        float xEdgeLength = (2*tileSize * (2 * xHalfExt + 1)+tileSize) * 1.1f;
-        float zEdgeOffset = (2*tileSize * (zHalfExt + 1) + tileSize) * 1.1f;
-        float zEdgeLength = (2*tileSize * (2 * zHalfExt + 1) + tileSize) * 1.1f;
+        float xEdgeOffset = (2*tileSize * (xHalfExt + 1));
+        float xEdgeLength = 2*tileSize * (2 * xHalfExt + 1)+tileSize*2;
+        float zEdgeOffset = (2*tileSize * (zHalfExt + 1));
+        float zEdgeLength = 2*tileSize * (2 * zHalfExt + 1) + tileSize * 2;
 
         floor.transform.localScale = new Vector3(tileSize * (2* xHalfExt + 1), 1, tileSize * (2 * zHalfExt + 1));
 
-        topEdge.transform.localPosition = new Vector3(0, -5, -xEdgeOffset);
+        topEdge.transform.localPosition = new Vector3(0, -5, -zEdgeOffset);
         topEdge.transform.localScale = new Vector3(0.2f , tileSize, xEdgeLength);
 
-        bottomEdge.transform.localPosition = new Vector3(0, -5, xEdgeOffset);
+        bottomEdge.transform.localPosition = new Vector3(0, -5, zEdgeOffset);
         bottomEdge.transform.localScale = new Vector3(0.2f, tileSize, xEdgeLength);
 
-        leftEdge.transform.localPosition = new Vector3(-zEdgeOffset, -5, 0);
+        leftEdge.transform.localPosition = new Vector3(-xEdgeOffset, -5, 0);
         leftEdge.transform.localScale = new Vector3(0.2f, tileSize, zEdgeLength);
 
-        rightEdge.transform.localPosition = new Vector3(zEdgeOffset, -5, 0);
+        rightEdge.transform.localPosition = new Vector3(xEdgeOffset, -5, 0);
         rightEdge.transform.localScale = new Vector3(0.2f, tileSize, zEdgeLength);
 
         basementOverlay.transform.localScale = new Vector3(1,1,1);
