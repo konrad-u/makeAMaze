@@ -9,11 +9,11 @@ public class CreateLevel : MonoBehaviour
     //The tiles have been modeled as 4x4 unity unit squares
     private const float tileSize = 4;    
 
-    private GameObject root, floor, environment, ball, edge;
+    private GameObject root, floor, environment, edge;
     public int xHalfExt;
     public int zHalfExt;
 
-    public GameObject topEdge, rightEdge, bottomEdge, leftEdge, basementOverlay;
+    public GameObject topEdge, rightEdge, bottomEdge, leftEdge, basementOverlay, basementFloor, horzPedal, vertPedal, ball;
 
 
     public GameObject outerWall;
@@ -37,6 +37,7 @@ public class CreateLevel : MonoBehaviour
 
         createFloor();
 
+        setPedals();
         // Calculate a scale factor for scaling the non-movable environment (and therefore the camera) and the BasePlatform 
         // the factors that the environment are scaled for right now are for x/zHalfExt =1, scale accordingly
         // i.e. the playfield/environment should be as big as the dynamic field
@@ -60,7 +61,12 @@ public class CreateLevel : MonoBehaviour
 
     //You might need this more than once...
     void placeBallStart()
-    {    
+    {
+        float randomX = UnityEngine.Random.Range(-xHalfExt * tileSize, xHalfExt * tileSize);
+        Debug.Log(randomX);
+        float randomZ = UnityEngine.Random.Range(-zHalfExt * tileSize, zHalfExt * tileSize);
+        Debug.Log(randomZ); 
+        ball.transform.position = new Vector3(randomX, 5, randomZ);
         // Reset Physics
         // Place the ball
     }
@@ -99,8 +105,12 @@ public class CreateLevel : MonoBehaviour
 
         rightEdge.transform.localPosition = new Vector3(xEdgeOffset, -5, 0);
         rightEdge.transform.localScale = new Vector3(0.2f, tileSize, zEdgeLength);
+        Debug.Log("the x edge length is " + xEdgeLength);
+        Debug.Log("the z edge length is " + zEdgeLength);
 
-        basementOverlay.transform.localScale = new Vector3(1,1,1);
+        basementOverlay.transform.localScale = new Vector3(xEdgeLength/10, 0, zEdgeLength/10) ;
+        basementFloor.transform.localScale = new Vector3(xEdgeLength/2.2f, 1, zEdgeLength/2.2f);
+
     }
 
     public void createFloor()
@@ -148,9 +158,11 @@ public class CreateLevel : MonoBehaviour
 
     }
 
-    public void setupDSBasementFloor()
+    public void setPedals()
     {
-        root.transform.localScale = new Vector3(20, 20, 20);
+        horzPedal.transform.position = new Vector3(0, horzPedal.transform.position.y, (zHalfExt * tileSize)+tileSize + horzPedal.transform.localScale.z);
+
+        vertPedal.transform.position = new Vector3((xHalfExt * tileSize) + tileSize + vertPedal.transform.localScale.x, vertPedal.transform.position.y, 0);
     }
 
 }

@@ -501,7 +501,7 @@ Transform:
   m_Children:
   - {fileID: 285722452}
   m_Father: {fileID: 1460428234}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90.00001}
 --- !u!1 &380694367
 GameObject:
@@ -532,13 +532,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e83f4b0a0d6a024689df7f72781fdd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xHalfExt: 3
-  zHalfExt: 6
+  xHalfExt: 4
+  zHalfExt: 2
   topEdge: {fileID: 1619362984}
   rightEdge: {fileID: 2055654690}
   bottomEdge: {fileID: 264351890}
   leftEdge: {fileID: 508229058}
   basementOverlay: {fileID: 1495789013}
+  basementFloor: {fileID: 1057088155}
+  horzPedal: {fileID: 563446975}
+  vertPedal: {fileID: 321387089}
+  ball: {fileID: 1342967982}
   outerWall: {fileID: 1000011184248900, guid: 385789a77abb9ff4698c4d7773cc0f2d, type: 3}
   innerWall: {fileID: 1000013581181652, guid: 6aa59ff40bf6c9244af19401ad85802b, type: 3}
   exitTile: {fileID: 1000012243137280, guid: 5f17e86767f1e654086f1835c3e8ef72, type: 3}
@@ -749,7 +753,7 @@ Transform:
   m_Children:
   - {fileID: 231479215}
   m_Father: {fileID: 1460428234}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 86.407005, y: 90.00001, z: 90.00001}
 --- !u!1001 &835618750
 PrefabInstance:
@@ -864,11 +868,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000012959840956, guid: db12fd5adc6354e4b86542f07ae9876d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 13
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4000012959840956, guid: db12fd5adc6354e4b86542f07ae9876d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 13
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 65000010368428246, guid: db12fd5adc6354e4b86542f07ae9876d,
         type: 3}
@@ -877,6 +881,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db12fd5adc6354e4b86542f07ae9876d, type: 3}
+--- !u!1 &1342967982 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1000012495938960, guid: 61ab0005e0dd4014aafd36b4e2857422,
+    type: 3}
+  m_PrefabInstance: {fileID: 1704547525}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1346720322
 GameObject:
   m_ObjectHideFlags: 0
@@ -998,7 +1008,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1460428234}
-  - component: {fileID: 1460428235}
   m_Layer: 0
   m_Name: Environment
   m_TagString: Untagged
@@ -1017,8 +1026,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
-  - {fileID: 563446979}
   - {fileID: 321387093}
+  - {fileID: 563446979}
   - {fileID: 1495789014}
   - {fileID: 1619362988}
   - {fileID: 264351894}
@@ -1028,29 +1037,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1460428235
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1460428233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e83f4b0a0d6a024689df7f72781fdd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  xHalfExt: 0
-  zHalfExt: 0
-  topEdge: {fileID: 0}
-  rightEdge: {fileID: 0}
-  bottomEdge: {fileID: 0}
-  leftEdge: {fileID: 0}
-  basementOverlay: {fileID: 0}
-  outerWall: {fileID: 0}
-  innerWall: {fileID: 0}
-  exitTile: {fileID: 0}
-  floorTiles: []
 --- !u!1 &1495789013
 GameObject:
   m_ObjectHideFlags: 0
