@@ -29,17 +29,28 @@ public class CreateLevel : MonoBehaviour
 
         root = GameObject.Find("MovablePlayfield");
         floor = GameObject.Find("DSBasementFloor");
+        environment = GameObject.Find("Environment");
 
-
-        scaleFloorAndCreateEdges();
+        //scaleFloorAndCreateEdges();
 
         // Build an offset for the dyn playfield from the BasePlatform e.g. the bigger halfExtent value in unity units
 
         createFloor();
 
-        setPedals();
+        //setPedals();
 
         // Scale Environment
+
+        float xExt = (xHalfExt * 2 + 1);
+        float zExt = (zHalfExt * 2 + 1);
+        if (xHalfExt > zHalfExt){
+            environment.transform.localScale = new Vector3(xExt/6, xExt / 6, xExt / 6);
+        }
+        else
+        {
+            environment.transform.localScale = new Vector3(zExt / 6, zExt / 6, zExt / 6);
+        }
+        floor.GetComponent<Transform>().localScale = new Vector3(xExt * tileSize + 1, 1, zExt * tileSize + 1);
 
         // Scale  + position BasePlate
 
