@@ -16,6 +16,6 @@ public class YouWinTest : MonoBehaviour {
         // call a method of gameCtrl indicating a possible win situation
         // Is ist good to test for Player here?
         print("You Won!");
-        SceneManager.LoadScene("s0572411_KonradUkens");
+        SceneManager.LoadScene("s0572411_KonradUkens_MeineAbgabe");
     }
 }
