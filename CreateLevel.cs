@@ -21,6 +21,11 @@ public class CreateLevel : MonoBehaviour
     public GameObject[] floorTiles;  
     //private int start, end;
     private Vector3 startPos;
+    private float xExt;
+    private float zExt;
+    private float envScaleFactor;
+    private float xScale;
+    private float zScale;
 
     // Use this for initialization
     void Awake()
@@ -30,6 +35,12 @@ public class CreateLevel : MonoBehaviour
         root = GameObject.Find("MovablePlayfield");
         floor = GameObject.Find("DSBasementFloor");
         environment = GameObject.Find("Environment");
+
+        xExt = (xHalfExt * 2 + 1);
+        zExt = (zHalfExt * 2 + 1);
+        envScaleFactor = 7;
+        xScale = xExt / envScaleFactor;
+        zScale = zExt / envScaleFactor;
 
         //scaleFloorAndCreateEdges();
 
@@ -41,14 +52,13 @@ public class CreateLevel : MonoBehaviour
 
         // Scale Environment
 
-        float xExt = (xHalfExt * 2 + 1);
-        float zExt = (zHalfExt * 2 + 1);
-        if (xHalfExt > zHalfExt){
-            environment.transform.localScale = new Vector3(xExt/6, xExt / 6, xExt / 6);
+        if (xHalfExt > zHalfExt)
+        {
+            environment.transform.localScale = new Vector3(xScale, xScale, xScale);
         }
         else
         {
-            environment.transform.localScale = new Vector3(zExt / 6, zExt / 6, zExt / 6);
+            environment.transform.localScale = new Vector3(zScale, zScale, zScale);
         }
         floor.GetComponent<Transform>().localScale = new Vector3(xExt * tileSize + 1, 1, zExt * tileSize + 1);
 
@@ -96,6 +106,8 @@ public class CreateLevel : MonoBehaviour
         // Player has fallen onto ground plane, reset
     }
 
+    /*no longer used, resolved scaling issues by scaling the environment as a whole 
+     * 
     public void scaleFloorAndCreateEdges()
     {
         float xEdgeOffset = (2*tileSize * (xHalfExt + 1));
@@ -121,6 +133,7 @@ public class CreateLevel : MonoBehaviour
         basementFloor.transform.localScale = new Vector3(xEdgeLength/2.2f, 1, zEdgeLength/2.2f);
 
     }
+    */
 
     public void createFloor()
     {
@@ -179,12 +192,14 @@ public class CreateLevel : MonoBehaviour
 
     }
 
+    /* also no longer used
     public void setPedals()
     {
         horzPedal.transform.position = new Vector3(0, horzPedal.transform.position.y, (zHalfExt * tileSize)+tileSize + horzPedal.transform.localScale.z);
 
         vertPedal.transform.position = new Vector3((xHalfExt * tileSize) + tileSize + vertPedal.transform.localScale.x, vertPedal.transform.position.y, 0);
     }
+    */
 
 }
 	
