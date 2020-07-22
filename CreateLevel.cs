@@ -28,7 +28,7 @@ public class CreateLevel : MonoBehaviour
     private float xScale;
     private float zScale;
 
-    public GameObject[,] maze;
+    public MazeCell[,] maze;
 
     // Use this for initialization
     void Awake()
@@ -44,6 +44,8 @@ public class CreateLevel : MonoBehaviour
         envScaleFactor = 7;
         xScale = xExt / envScaleFactor;
         zScale = zExt / envScaleFactor;
+
+        maze = new MazeCell[(int)xExt, (int)zExt];
 
         //scaleFloorAndCreateEdges();
 
@@ -74,7 +76,6 @@ public class CreateLevel : MonoBehaviour
             // create a maze
 
 
-            maze = new GameObject[xHalfExt, zHalfExt];
 
 
 
@@ -149,6 +150,7 @@ public class CreateLevel : MonoBehaviour
     {
         int randomI = UnityEngine.Random.Range(-xHalfExt, xHalfExt);
         int randomJ = UnityEngine.Random.Range(-zHalfExt, zHalfExt);
+        GameObject createdTile;
 
         for (int i = -xHalfExt; i <= xHalfExt; i++)
         {
@@ -156,21 +158,35 @@ public class CreateLevel : MonoBehaviour
             {
                 if (i.Equals(randomI) && j.Equals(randomJ))
                 {
-                    Instantiate(exitTile, new Vector3(i, 0, j) * tileSize + new Vector3(0, 0.5f, 0),
+                    createdTile = Instantiate(exitTile, new Vector3(i, 0, j) * tileSize + new Vector3(0, 0.5f, 0),
                     Quaternion.Euler(0, 0, 0),
                     root.transform);
                 }
                 else
                 {
                     int rTile = UnityEngine.Random.Range(0, 6);
-                    Instantiate(floorTiles[rTile],
+                    createdTile = Instantiate(floorTiles[rTile],
                         new Vector3(i, 0, j) * tileSize + new Vector3(0, 0.5f, 0),
                         Quaternion.Euler(0, 0, 0),
                         root.transform);
                 }
+
+                maze[i + xHalfExt, j + zHalfExt] = gameObject.AddComponent<MazeCell>();
+                maze[i + xHalfExt, j + zHalfExt].floorCell = createdTile;
+                Debug.Log(maze[i+xHalfExt, j+zHalfExt] + " at " + maze[i + xHalfExt, j + zHalfExt].floorCell.transform.position);
+                Debug.Log(maze.Length);
             }
         }
     }
+
+    public void setupMazeWalls()
+    {
+        for (int i = 0; i < maze.Length; i++)
+        {
+
+        }
+    }
+
 
     public void createOuterWalls()
     {
