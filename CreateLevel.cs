@@ -19,6 +19,7 @@ public class CreateLevel : MonoBehaviour
     public GameObject innerWall;    
     public GameObject exitTile;
     public GameObject[] floorTiles;  
+
     //private int start, end;
     private Vector3 startPos;
     private float xExt;
@@ -26,6 +27,8 @@ public class CreateLevel : MonoBehaviour
     private float envScaleFactor;
     private float xScale;
     private float zScale;
+
+    public GameObject[,] maze;
 
     // Use this for initialization
     void Awake()
@@ -69,6 +72,13 @@ public class CreateLevel : MonoBehaviour
             // Create the outer walls for given extXZ
             createOuterWalls();
             // create a maze
+
+
+            maze = new GameObject[xHalfExt, zHalfExt];
+
+
+
+
             // Build the maze from the given set of prefabs
             // Set the walls for the maze (place only one wall between two cells, not two!)
 
