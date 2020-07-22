@@ -76,8 +76,7 @@ public class CreateLevel : MonoBehaviour
             // create a maze
 
 
-
-
+            //setupNeighbors(maze);
 
 
             // Build the maze from the given set of prefabs
@@ -170,21 +169,67 @@ public class CreateLevel : MonoBehaviour
                         Quaternion.Euler(0, 0, 0),
                         root.transform);
                 }
+                int mazeCol = i + xHalfExt;
+                int mazeRow = j + zHalfExt;
+                maze[mazeCol, mazeRow] = gameObject.AddComponent<MazeCell>();
+                maze[mazeCol, mazeRow].floorTile = createdTile;
 
-                maze[i + xHalfExt, j + zHalfExt] = gameObject.AddComponent<MazeCell>();
-                maze[i + xHalfExt, j + zHalfExt].floorCell = createdTile;
-                Debug.Log(maze[i+xHalfExt, j+zHalfExt] + " at " + maze[i + xHalfExt, j + zHalfExt].floorCell.transform.position);
-                Debug.Log(maze.Length);
+
+                Debug.Log(maze[mazeCol, mazeRow] + " at " + maze[mazeCol, mazeRow].floorTile.transform.position + ", col "+ mazeCol + ", row " + mazeRow);
             }
         }
     }
 
-    public void setupMazeWalls()
-    {
-        for (int i = 0; i < maze.Length; i++)
-        {
 
+    public void setupNeighbors(MazeCell[,] maze)
+    {
+        int totNeighbors = 0;
+        for (int i = 0; i < xExt; i++)
+        {
+            for (int j = 0; j < zExt; j++)
+            {
+
+                float tileX = maze[i, j].transform.position.x;
+                float tileY = maze[i, j].transform.position.y;
+                float tileZ = maze[i, j].transform.position.z;
+                GameObject parentTile = maze[i, j].floorTile;
+
+                if (i >= 1)
+                {
+                    maze[i, j].westNeighbor = maze[i-1, j];
+                    Debug.Log("west " + maze[i, j].westNeighbor);
+                    totNeighbors++;
+
+
+                   maze[i, j].westWall = Instantiate(innerWall, new Vector3(tileX + tileSize / 2, tileY, tileZ), Quaternion.Euler(0, 90, 0), parentTile.transform);
+                }
+                if(i < xExt-1)
+                {
+                    maze[i, j].eastNeighbor = maze[i + 1, j];
+                    Debug.Log("west " + maze[i, j].eastNeighbor);
+                    totNeighbors++;
+
+                    maze[i, j].eastWall = Instantiate(innerWall, new Vector3(tileX - tileSize / 2, tileY, tileZ), Quaternion.Euler(0, 90, 0), parentTile.transform);
+                }
+                if (j >= 1)
+                {
+                    maze[i, j].northNeighbor = maze[i, j - 1];
+                    Debug.Log("west " + maze[i, j].northNeighbor);
+                    totNeighbors++;
+
+                    maze[i, j].northWall = Instantiate(innerWall, new Vector3(tileX, tileY, tileZ - tileSize / 2), Quaternion.Euler(0, 0, 0), parentTile.transform);
+                }
+                if (j < zExt-1)
+                {
+                    maze[i, j].westNeighbor = maze[i, j+1];
+                    Debug.Log("west " + maze[i, j].westNeighbor);
+                    totNeighbors++;
+
+                    maze[i, j].southWall = Instantiate(innerWall, new Vector3(tileX, tileY, tileZ + tileSize / 2), Quaternion.Euler(0, 0, 0), parentTile.transform);
+                }
+            }
         }
+        Debug.Log(totNeighbors);
     }
 
 

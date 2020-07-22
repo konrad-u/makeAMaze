@@ -20,7 +20,7 @@ public class BaseMovement : MonoBehaviour
         {
             vertPedal = GameObject.Find("VertPedal");
         }
-        tiltSpeed = 8f;
+        tiltSpeed = 2.0f;
     }
 
     // Update is called once per frame
